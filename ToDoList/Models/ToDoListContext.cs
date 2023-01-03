@@ -2,10 +2,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ToDoList.Models
 {
-  public class ToDoListContext : DbContext //DbContext extends entity framework core
+  public class ToDoListContext : DbContext
   {
-    public DbSet<Item> Items { get; set; }  //represents items table in database. Entity named Items (with 's')
-    public ToDoListContext(DbContextOptions options) : base(options) { }  //base represents the parent DBContext class
-                                                                          //options will be passed through dependency injection from program.cs
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Item> Items { get; set; }
+    public DbSet<Tag> Tags { get; set; }  //added for Tag class
+
+    public ToDoListContext(DbContextOptions options) : base(options) { }
   }
 }

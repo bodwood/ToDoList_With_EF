@@ -9,11 +9,12 @@ namespace ToDoList
   {
     static void Main(string[] args)
     {
+
       WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
       builder.Services.AddControllersWithViews();
 
-      builder.Services.AddDbContext<ToDoListContext>( //same name as ToDoListContext class in ToDoListContext.cs
+      builder.Services.AddDbContext<ToDoListContext>(
                         dbContextOptions => dbContextOptions
                           .UseMySql(
                             builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
