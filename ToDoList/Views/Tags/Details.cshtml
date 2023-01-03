@@ -20,12 +20,21 @@ else
   @foreach(ItemTag join in Model.JoinEntities)  //loop through each Tag.JoinEntities property and display each Items description
   {
     <li>@join.Item.Description</li>
+    @using (Html.BeginForm("DeleteJoin", "Tags"))
+    {
+      @Html.Hidden("joinId", @join.ItemTagId) //sends joinId to DeleteJoin method in TagsController.cs
+      <input type="submit" value="Delete"/> //new delete button created for each join entity listed on the tag's details page
+    }
   }
   </ul>
 }
+
+
 
 <p>@Html.ActionLink("Back to list", "Index")</p>
 
 <p>@Html.ActionLink("Add an Item", "AddItem", new { id = Model.TagId })</p>
 
 <p>@Html.ActionLink("Edit Tag", "Edit", new { id = Model.TagId })</p>
+
+<p>@Html.ActionLink("Delete Tag", "Delete", new { id = Model.TagId })</p>

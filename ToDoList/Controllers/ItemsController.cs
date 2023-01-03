@@ -103,5 +103,14 @@ namespace ToDoList.Controllers
       return RedirectToAction("Details", new { id = item.ItemId });
     }  
 
+    [HttpPost]
+    public ActionResult DeleteJoin(int joinId)
+    {
+      ItemTag joinEntry = _db.ItemTags.FirstOrDefault(entry => entry.ItemTagId == joinId);
+      _db.ItemTags.Remove(joinEntry); //removes join from ItemTags db
+      _db.SaveChanges();  //saves changes
+      return RedirectToAction("Index");
+    }
+
   }
 }
