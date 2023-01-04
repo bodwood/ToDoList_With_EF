@@ -3,11 +3,11 @@
 }
 
 @using ToDoList.Models 
-@model ToDoList.Models.Tag
+@model ToDoList.Models.Tag  //tells view that we are receiving a model that is a tag 
 
 <h2>Tag Details</h2>
 <hr />
-<h3>@Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)</h3>
+<h3>@Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)</h3> <!--model => model.Title says we want to use the Tags title-->
 
 @if(@Model.JoinEntities.Count == 0)
 {
@@ -20,7 +20,7 @@ else
   @foreach(ItemTag join in Model.JoinEntities)  //loop through each Tag.JoinEntities property and display each Items description
   {
     <li>@join.Item.Description</li>
-    @using (Html.BeginForm("DeleteJoin", "Tags"))
+    @using (Html.BeginForm("DeleteJoin", "Tags")) //creates a form that sends info to DeleteJoin route
     {
       @Html.Hidden("joinId", @join.ItemTagId) //sends joinId to DeleteJoin method in TagsController.cs
       <input type="submit" value="Delete"/> //new delete button created for each join entity listed on the tag's details page

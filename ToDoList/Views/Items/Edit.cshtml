@@ -10,7 +10,7 @@
 
 @using (Html.BeginForm())
 {
-  @Html.HiddenFor(model => model.ItemId)
+  @Html.HiddenFor(model => model.ItemId)  //used to pass the specific item's ItemId on to the controller
 
   @Html.LabelFor(model => model.Description)
   @Html.EditorFor(model => model.Description)

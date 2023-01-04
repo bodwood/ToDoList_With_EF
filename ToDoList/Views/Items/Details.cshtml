@@ -7,7 +7,7 @@
 
 <h2>Item Details</h2>
 <hr />
-<h3>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)</h3>  
+<h3>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)</h3>  <!--DisplayNameFor is for "Description" display for is for the action description itself-->
 <h3>@Html.DisplayNameFor(model => model.Category): @Html.DisplayFor(model => model.Category.Name)</h3>
 
 @if(@Model.JoinEntities.Count == 0)
@@ -31,6 +31,6 @@ else
 }
 <p>@Html.ActionLink("Back to list", "Index")</p>
 <p>@Html.ActionLink("Edit Item or Category", "Edit", new { id = Model.ItemId })</p>
-<p>@Html.ActionLink("Delete Item", "Delete", new { id = Model.ItemId })</p>
+<p>@Html.ActionLink("Delete Item", "Delete", new { id = Model.ItemId })</p> <!--Routes to Delete method with id of the specific item that's wanted to be deleted-->
 
 <p>@Html.ActionLink("Add a Tag", "AddTag", new { id = Model.ItemId })</p>

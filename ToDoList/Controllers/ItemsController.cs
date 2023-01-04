@@ -3,24 +3,24 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq;  //translates dataset into C# types
 
 namespace ToDoList.Controllers
 {
   public class ItemsController : Controller
   {
-    private readonly ToDoListContext _db;
+    private readonly ToDoListContext _db; //database connection
 
     public ItemsController(ToDoListContext db)
     {
-      _db = db;
+      _db = db; //set _db to db
     }
 
     public ActionResult Index()
     {
-      List<Item> model = _db.Items
+      List<Item> model = _db.Items  //checks db for object named items
                             .Include(item => item.Category)
-                            .ToList();
+                            .ToList(); //Linq turns dbset into a list that's used to create the model for the Index view
       return View(model);
     }
 
@@ -33,30 +33,34 @@ namespace ToDoList.Controllers
     [HttpPost]
     public ActionResult Create(Item item)
     {
-      if (item.CategoryId == 0)
+      if (!ModelState.IsValid)
       {
-        return RedirectToAction("Create");
+        ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
+        return View(item);
       }
-      _db.Items.Add(item);
+      else{
+      _db.Items.Add(item);  //adds item to Items table within db
       _db.SaveChanges();
       return RedirectToAction("Index");
+      }
     }
 
-    public ActionResult Details(int id)
+    public ActionResult Details(int id) //id passed in from Index.cshtml ("Details", new { id = item.ItemId })
     {
       Item thisItem = _db.Items
                           .Include(item => item.Category)
                           .Include(item => item.JoinEntities) //grabs the join entities
                           .ThenInclude(join => join.Tag)  //loads the Tag object for each join entity
-                          .FirstOrDefault(item => item.ItemId == id);
+                          .FirstOrDefault(item => item.ItemId == id); /* find any items where the ItemId of an item 
+                                                                         is equal to the id we passed into this method */
       return View(thisItem);
     }
 
     public ActionResult Edit(int id)
     {
-      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);  //finds specific item in items table
       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
-      return View(thisItem);
+      return View(thisItem);  //passes item to view
     }
 
     [HttpPost]
@@ -67,13 +71,13 @@ namespace ToDoList.Controllers
       return RedirectToAction("Index");
     }
 
-    public ActionResult Delete(int id)
+    public ActionResult Delete(int id)  //takes id from form
     {
-      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-      return View(thisItem);
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);  //grabs item with same id as parameter
+      return View(thisItem);  //returns the item
     }
 
-    [HttpPost, ActionName("Delete")]
+    [HttpPost, ActionName("Delete")]  //allows us to utilize the proper Delte action even though we named our method DeleteConfirmed
     public ActionResult DeleteConfirmed(int id)
     {
       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);

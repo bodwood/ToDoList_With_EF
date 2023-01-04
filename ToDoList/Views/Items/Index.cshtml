@@ -15,7 +15,7 @@ else
   <ul>
     @foreach (Item item in Model)
     {
-      <li>@Html.ActionLink($"{item.Description}", "Details", new { id = item.ItemId }) | @item.Category.Name</li>
+      <li>@Html.ActionLink($"{item.Description}", "Details", new { id = item.ItemId }) | @item.Category.Name</li> //routes to Details method in ItemsController. id is what's passed into the Details method
     }
   </ul>
 }

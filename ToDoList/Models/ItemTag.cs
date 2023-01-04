@@ -1,6 +1,6 @@
 namespace ToDoList.Models
 {
-  public class ItemTag
+  public class ItemTag  //this is the entity
   {
     public int ItemTagId { get; set; }
     public int ItemId { get; set; }
